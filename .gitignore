@@ -1,5 +1,6 @@
 # dependencies
 node_modules
+./crawler/node_modules
 
 # logs
 npm-debug.log
@@ -9,3 +10,5 @@ npm-debug.log
 
 # Nuxt generate
 dist
+
+.idea
