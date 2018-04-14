@@ -18,7 +18,7 @@ console.log('Store path:'+store_path);
 var tx_id = null;
 
 
-exports.invoke = function({id, title}) {
+exports.invoke = function({id, text}) {
 
   return new Promise(function(resolve, reject) {
     Fabric_Client.newDefaultKeyValueStore({
@@ -46,7 +46,7 @@ exports.invoke = function({id, title}) {
       var request = {
         chaincodeId: 'fabcar',
         fcn: 'testCreate',
-        args: [id, title, 'test', 'pjt', 'asd'],
+        args: [id, text, 'test', 'pjt', 'asd'],
         chainId: 'mychannel',
         txId: tx_id
       };
