@@ -14,6 +14,10 @@
     "curl-request": "^1.1.1",
     "elastic-client": "0.0.3",
     "elasticness": "^0.1.3",
-    "request": "^2.85.0"
+    "elasticsearch": "^14.2.2",
+    "fabric-client": "^1.1.0",
+    "korean-text-analytics": "0.0.7",
+    "request": "^2.85.0",
+    "sha256": "^0.2.0"
   }
 }

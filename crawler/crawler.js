@@ -1,6 +1,6 @@
 var cheerio = require('cheerio');
 var request = require('request');
-var  { invoke } = require('./invoke');
+// var  { invoke } = require('./invoke');
 var elasticsearch_client = require('./elasticsearchData');
 var sha256 = require('sha256')
 var { parse } = require('./parse')
@@ -27,7 +27,7 @@ async function craw(range){
   let peerIndex = 10;
 
   for(let i = 1 ; i< range +1 ; ++i){
-    let url = `https://search.naver.com/search.naver?where=post&sm=tab_jum&query= 거상&start=${i}`;
+    let url = `https://search.naver.com/search.naver?where=post&sm=tab_jum&query=다크에덴&start=${i}`;
     console.log(`========= ${url} ========= `)
 
     let $ = await getDom(url)
@@ -46,14 +46,14 @@ async function craw(range){
       // blog page
       let $ = await getDom(link)
       linktemp['text'] = $.text().trim()
-      let parsedText = await parse(linktemp['text'])
+      // let parsedText = await parse(linktemp['text'])
       // await invoke(linktemp);
       try {
         await elasticsearch_save({id: linktemp['id'], text: linktemp['text'], link: linktemp['link']})
       } catch (err) {
         console.log(err)
       }
-      console.log(parsedText)
+      // console.log(parsedText)
       console.log(linktemp)
     }
   }
@@ -91,7 +91,7 @@ function elasticsearch_save({id, text, link}){
   })
 }
 
-function elasticsearch_search(){
+function elasticsearchAllSearch(){
   return new Promise((resolve, reject) => {
     elasticsearch_client.search({
       index: 'korean',
@@ -104,18 +104,50 @@ function elasticsearch_search(){
   })
 }
 
+function elasticsearchKeywordSearch(keyword){
+  return new Promise((resolve, reject) => {
+    elasticsearch_client.search({
+      index: 'korean',
+      type: 'text',
+      // source: [keyword],
+      // query: {
+      //   bool: {
+      //     must: [
+      //       {
+      //         match: {
+      //           text: keyword
+      //         }
+      //       }
+      //     ]
+      //   }
+      // }
+      q: keyword
+    }, (err, result) => {
+      if (err) reject (err)
+
+      resolve(result)
+    })
+  })
+}
+
 async function start(){
 
-  await craw(1)
+  await craw(100)
 
   // let now = Date.now().toString()
   // let str = `안녕하세요. 좋은 아침입니다. ${now}`
   // let saved = await elasticsearch_save({id: now, text: str, link: 'http://www.naver.com'})
   // console.log(saved)
+
+  // let data = await elasticsearchAllSearch('블로그')
+  // try{
   //
-  // let data = await elasticsearch_search()
-  // console.log(data.hits.hits)
-  //
+  //   let data = await elasticsearchKeywordSearch('와우랑')
+  //   console.log(data.hits.hits)
+  // } catch (err) {
+  //   console.log(err)
+  // }
+
   // console.log('end')
 }
 

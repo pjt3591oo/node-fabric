@@ -25,8 +25,7 @@ var tx_id = null;
 
 router.post('/', (req, res) => {
   let {
-    Key, colour, make,
-    model, owner
+    keyword
   } = req.body;
   // create the key value store as defined in the fabric-client/config/default.json 'key-value-store' setting
   Fabric_Client.newDefaultKeyValueStore({
@@ -62,8 +61,8 @@ router.post('/', (req, res) => {
     var request = {
       //targets: let default to the peer assigned to the client
       chaincodeId: 'fabcar',
-      fcn: 'testCreate',
-      args: [ Key, colour, make, model, owner],
+      fcn: 'getAddressFromKeyword',
+      args: [ keyword ],
       chainId: 'mychannel',
       txId: tx_id
     };
