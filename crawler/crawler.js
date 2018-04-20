@@ -36,7 +36,7 @@ async function craw(range){
   let peerIndex = 10;
 
   for(let i = 1 ; i< range +1 ; ++i){
-    let url = `https://search.naver.com/search.naver?where=post&sm=tab_jum&query=python&start=${i}`;
+    let url = `https://search.naver.com/search.naver?where=post&sm=tab_jum&query=바람의나라&start=${i}`;
     console.log(`========= ${url} ========= `)
 
     let $ = await getDom(url)
@@ -66,7 +66,6 @@ async function craw(range){
       console.log(linktemp)
       sleep(300)
     }
-
 
   }
 }
@@ -144,7 +143,7 @@ function elasticsearchKeywordSearch(keyword){
 
 async function start(){
 
-  await craw(130)
+  await craw(10)
 
   // let now = Date.now().toString()
   // let str = `안녕하세요. 좋은 아침입니다. ${now}`
