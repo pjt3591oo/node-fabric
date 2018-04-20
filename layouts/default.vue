@@ -1,7 +1,7 @@
 <template>
   <div>
-    <nuxt-link to ="/admin"> 관리자 관리 </nuxt-link>
-    <nuxt-link to ="/chain"> 체인코드 테스트 </nuxt-link>
+    <!--<nuxt-link to ="/admin"> 관리자 관리 </nuxt-link>-->
+    <!--<nuxt-link to ="/chain"> 체인코드 테스트 </nuxt-link>-->
     <nuxt/>
   </div>
 </template>

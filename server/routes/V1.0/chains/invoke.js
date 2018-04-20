@@ -27,6 +27,10 @@ router.post('/', (req, res) => {
   let {
     keyword
   } = req.body;
+
+
+  console.log(keyword)
+
   // create the key value store as defined in the fabric-client/config/default.json 'key-value-store' setting
   Fabric_Client.newDefaultKeyValueStore({
     path: store_path

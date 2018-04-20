@@ -4,10 +4,20 @@ var request = require('request');
 var elasticsearch_client = require('./elasticsearchData');
 var sha256 = require('sha256')
 var { parse } = require('./parse')
-HEADERS = {
+
+var HEADERS = {
    'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) ppleWebKit/537.36 (KHTML, like Gecko) Chrome/27.0.1453.110 Safari/537.36',
    'Content-Type' : 'application/x-www-form-urlencoded'
 };
+
+function sleep(milliseconds) {
+  var start = new Date().getTime();
+  for (var i = 0; i < 1e7; i++) {
+    if ((new Date().getTime() - start) > milliseconds){
+      break;
+    }
+  }
+}
 
 function getDom(url){
     return new Promise(function(resolve, reject) {
@@ -16,7 +26,6 @@ function getDom(url){
             headers: HEADERS
         }, function(error, response, html){
             if (error) { reject(error) }
-
             let $ = cheerio.load(html);
             resolve($)
         })
@@ -27,7 +36,7 @@ async function craw(range){
   let peerIndex = 10;
 
   for(let i = 1 ; i< range +1 ; ++i){
-    let url = `https://search.naver.com/search.naver?where=post&sm=tab_jum&query=다크에덴&start=${i}`;
+    let url = `https://search.naver.com/search.naver?where=post&sm=tab_jum&query=python&start=${i}`;
     console.log(`========= ${url} ========= `)
 
     let $ = await getDom(url)
@@ -55,7 +64,10 @@ async function craw(range){
       }
       // console.log(parsedText)
       console.log(linktemp)
+      sleep(300)
     }
+
+
   }
 }
 
@@ -132,14 +144,14 @@ function elasticsearchKeywordSearch(keyword){
 
 async function start(){
 
-  await craw(100)
+  await craw(130)
 
   // let now = Date.now().toString()
   // let str = `안녕하세요. 좋은 아침입니다. ${now}`
   // let saved = await elasticsearch_save({id: now, text: str, link: 'http://www.naver.com'})
   // console.log(saved)
 
-  // let data = await elasticsearchAllSearch('블로그')
+  // let data = await elasticsearchAllSearch()
   // try{
   //
   //   let data = await elasticsearchKeywordSearch('와우랑')
