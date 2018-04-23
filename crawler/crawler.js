@@ -143,7 +143,7 @@ function elasticsearchKeywordSearch(keyword){
 
 async function start(){
 
-  await craw(10)
+  await craw(1)
 
   // let now = Date.now().toString()
   // let str = `안녕하세요. 좋은 아침입니다. ${now}`
