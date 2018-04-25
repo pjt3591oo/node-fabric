@@ -3,7 +3,7 @@
     <div>
       <h1>Rapid Search Engine</h1>
       <div class="main_search_wrap">
-          <input class="search_input" type="text" v-model="keyword" placeholder="검색">
+          <input class="search_input" type="text" v-model="keyword" @keyup.enter="search" placeholder="검색">
           <button class="search_btn" @click="search">검색</button>
       </div>
       <!--<button @click="invoke">invoke</button>-->
